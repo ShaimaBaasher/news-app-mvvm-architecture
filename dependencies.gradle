@@ -1,0 +1,46 @@
+ext {
+
+    def retrofitVersion = "2.6.2"
+    def gsonVersion = "2.8.5"
+    def loggingVersion = "3.14.0"
+    def gsonConverterVersion = "2.1.0"
+    def roomVersion = "2.4.1"
+    def hiltVersion = "2.38.1"
+    def sdpVersion = "1.0.6"
+    def lifecycle_version = "2.4.0"
+    def activity_ktx_version = "1.2.3"
+
+    def picassoVersion = "2.71828"
+    def coroutineVersion = "1.4.1"
+
+    coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
+    retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    gson = "com.google.code.gson:gson:$gsonVersion"
+    gsonConverter = "com.squareup.retrofit2:converter-gson:$gsonConverterVersion"
+
+    loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$loggingVersion"
+
+    roomDb = "androidx.room:room-runtime:$roomVersion"
+    roomCompiler = "androidx.room:room-compiler:$roomVersion"
+
+    hilt = "com.google.dagger:hilt-android:$hiltVersion"
+    hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+
+    activity = "androidx.activity:activity-ktx:$activity_ktx_version"
+    lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    sdp = "com.intuit.sdp:sdp-android:$sdpVersion"
+
+    roomRuntime = "androidx.room:room-runtime:$roomVersion"
+    roomCompiler = "androidx.room:room-compiler:$roomVersion"
+    roomKtx = "androidx.room:room-ktx:$roomVersion"
+
+
+    picasso = "com.squareup.picasso:picasso:$picassoVersion"
+    key = "123456"
+    alias = "key0"
+
+}
