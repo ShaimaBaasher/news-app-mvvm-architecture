@@ -20,14 +20,35 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'API_KEY', '"75f151d2f8c74649b9c8e28eafa5a135"'
+//        signingConfig signingConfigs.dev
+
     }
 
     buildTypes {
         release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_BASE_URL', '"https://api.nytimes.com/svc/mostpopular/v2/"'
+        }
+        dev {
+            versionNameSuffix ".dev"
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_BASE_URL', '"https://api.nytimes.com/svc/mostpopular/v2/"'
+        }
+        minifiedDebug {
+            versionNameSuffix ".dev"
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -62,11 +83,9 @@ dependencies {
     implementation gsonConverter
     implementation roomDb
     implementation hilt
-    implementation location
     implementation sdp
     implementation(roomRuntime)
     implementation(roomKtx)
-    implementation(worker)
     kapt(roomCompiler)
     kapt hiltCompiler
     kapt roomCompiler
