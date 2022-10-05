@@ -21,7 +21,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'String', 'API_KEY', '"75f151d2f8c74649b9c8e28eafa5a135"'
+        buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
 //        signingConfig signingConfigs.dev
 
     }
@@ -62,6 +62,8 @@ android {
 }
 
 dependencies {
+
+    implementation project(':data')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'

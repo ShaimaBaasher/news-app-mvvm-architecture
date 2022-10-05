@@ -1,5 +1,6 @@
 package com.shisheo.clean_3.data
 
+import com.newsappmvvmarchitecture.data.APIs
 import com.shisheo.clean_3.data.NetworkModule.component.BASE_URL
 
 import dagger.Module
@@ -48,11 +49,11 @@ class NetworkModule {
         }.build()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideApi(retrofit: Retrofit) : APIs {
-//        return retrofit.create(APIs::class.java)
-//    }
+    @Singleton
+    @Provides
+    fun provideApi(retrofit: Retrofit) : APIs {
+        return retrofit.create(APIs::class.java)
+    }
 
 
 }
