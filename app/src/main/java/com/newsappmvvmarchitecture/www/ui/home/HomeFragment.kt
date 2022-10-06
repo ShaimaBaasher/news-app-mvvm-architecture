@@ -63,7 +63,10 @@ class HomeFragment : Fragment() {
 
     private fun handleState(state: HomeFragmentState) {
         when (state) {
-            is HomeFragmentState.SuccessGetNews -> state.newsEntity?.let { handelNewsPosts(it) }
+            is HomeFragmentState.SuccessGetNews -> state.newsEntity?.let {
+                handelNewsPosts(it)
+                homeViewModel.storeNew(it)
+            }
             is HomeFragmentState.IsLoading -> state.isLoading?.let { handleLoading(it) }
             is HomeFragmentState.ShowToast -> {
                 state.message?.let { requireActivity().showToast(it) }
@@ -77,13 +80,13 @@ class HomeFragment : Fragment() {
         homeViewModel.viewState.observe(viewLifecycleOwner) {
             when (it) {
                 is HomeFragmentState.SuccessGetFromDb -> it.newsEntity?.let { it1 ->
-                    handelNewsPosts(it1)
+                    if(it.newsEntity!!.results.isNotEmpty()) {
+                        handelNewsPosts(it1)
+                    }
                 }
                 is HomeFragmentState.IsLoading -> it.isLoading?.let { it1 -> handleLoading(it1) }
                 is HomeFragmentState.ShowToast -> it.message?.let { it1 ->
-                    requireActivity().showToast(
-                        it1
-                    )
+                    requireActivity().showToast(it1)
                 }
                 is HomeFragmentState.Init -> Unit
             }
@@ -94,7 +97,6 @@ class HomeFragment : Fragment() {
         binding.newsRecyclerView.adapter?.let {
             if (it is NewsAdapter) {
                 it.updateList(results.results)
-//                homeViewModel.storeNew(results)
             }
         }
     }
