@@ -50,9 +50,9 @@ class AppDatabaseTest {
 
         dao.insert(newsEntityDAO)
 
-        val weathers = dao.loadAll()
+        val newsList = dao.loadAll()
 
-        assertNotNull(weathers)
+        assertNotNull(newsList)
     }
 
     @After
