@@ -74,7 +74,7 @@ class HomeViewModel  @Inject constructor(
         .map { result ->
             when (result) {
                 is BaseResult.Success -> HomeFragmentState.SuccessGetFromDb(result.data)
-                is BaseResult.ErrorMsg -> result.msg?.let { HomeFragmentState.ShowToast(it) }
+                is BaseResult.ErrorMsg -> result.msg.let { HomeFragmentState.ShowToast(it) }
                 is BaseResult.Error -> Log.d("exceptionMessage", result.exception.localizedMessage)
             }
         }.asLiveData(viewModelScope.coroutineContext)
