@@ -48,7 +48,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Log.d("responseFromServerFS", Gson().toJson(e.message))
-                emit(Utils.resolveError(e))
+                emit(BaseResult.ErrorMsg(Utils.resolveError(e)))
             }
         }
     }

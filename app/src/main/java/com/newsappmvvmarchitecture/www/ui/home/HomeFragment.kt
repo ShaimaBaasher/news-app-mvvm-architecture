@@ -33,22 +33,21 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
 
-    private lateinit var binding : FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-         homeViewModel =
+        homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false )
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         binding.viewModel = homeViewModel
         setupRecyclerView()
         homeViewModel.getMostViewedNews("7")
         observeNewsState(homeViewModel)
-
         val root: View = binding.root
         return root
     }
@@ -64,14 +63,30 @@ class HomeFragment : Fragment() {
 
     private fun handleState(state: HomeFragmentState) {
         when (state) {
-            is HomeFragmentState.SuccessGetNews -> handelNewsPosts(state.newsEntity)
-//            is HomeFragmentState.SuccessGetFromDb -> handelNewsPosts(state.newsEntity.)
-            is HomeFragmentState.IsLoading -> handleLoading(state.isLoading)
+            is HomeFragmentState.SuccessGetNews -> state.newsEntity?.let { handelNewsPosts(it) }
+            is HomeFragmentState.IsLoading -> state.isLoading?.let { handleLoading(it) }
             is HomeFragmentState.ShowToast -> {
-                requireActivity().showToast(state.message)
-//                getFromDb()
+                state.message?.let { requireActivity().showToast(it) }
+                getFromDb()
             }
             is HomeFragmentState.Init -> Unit
+        }
+    }
+
+    private fun getFromDb() {
+        homeViewModel.viewState.observe(viewLifecycleOwner) {
+            when (it) {
+                is HomeFragmentState.SuccessGetFromDb -> it.newsEntity?.let { it1 ->
+                    handelNewsPosts(it1)
+                }
+                is HomeFragmentState.IsLoading -> it.isLoading?.let { it1 -> handleLoading(it1) }
+                is HomeFragmentState.ShowToast -> it.message?.let { it1 ->
+                    requireActivity().showToast(
+                        it1
+                    )
+                }
+                is HomeFragmentState.Init -> Unit
+            }
         }
     }
 
@@ -79,7 +94,7 @@ class HomeFragment : Fragment() {
         binding.newsRecyclerView.adapter?.let {
             if (it is NewsAdapter) {
                 it.updateList(results.results)
-//                homeViewModel.storePlace(results)
+//                homeViewModel.storeNew(results)
             }
         }
     }

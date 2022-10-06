@@ -13,7 +13,7 @@ import java.net.UnknownHostException
 
 object Utils {
 
-    fun resolveError(e: Exception): BaseResult.Error {
+    fun resolveError(e: Exception): String {
         var error = e
         when (e) {
             is SocketTimeoutException -> {
@@ -40,7 +40,7 @@ object Utils {
                 }
             }
         }
-        return BaseResult.Error(error)
+        return error.localizedMessage
     }
 
 
