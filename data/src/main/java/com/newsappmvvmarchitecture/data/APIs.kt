@@ -1,6 +1,6 @@
 package com.newsappmvvmarchitecture.data
 
-import com.shaima.data.utils.WrappedListResponse
+import com.shaima.data.utils.WrappedNewsResponse
 import retrofit2.http.GET
 
 import retrofit2.Response
@@ -14,6 +14,6 @@ interface APIs {
     suspend fun getMostViewedNews(
         @Path("period") period : String,
         @Query("api-key") apiKey: String):
-            Response<WrappedListResponse>
+            Response<WrappedNewsResponse>
 
 }

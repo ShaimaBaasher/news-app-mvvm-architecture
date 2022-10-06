@@ -1,4 +1,4 @@
-package com.newsappmvvmarchitecture.domain.core
+package com.newsappmvvmarchitecture.domain.core.core
 
 sealed class BaseResult <out T> {
     data class Success <T>(val data : T) : BaseResult<T>()

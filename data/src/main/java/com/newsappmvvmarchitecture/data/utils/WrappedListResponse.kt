@@ -1,12 +1,13 @@
 package com.shaima.data.utils
 
 import com.google.gson.annotations.SerializedName
-import com.shaima.domain.home.response.CityResponse
-import com.shaima.domain.home.response.WeatherResponse
+import com.newsappmvvmarchitecture.domain.core.NewsEntity
+import com.newsappmvvmarchitecture.domain.core.fault
+import com.newsappmvvmarchitecture.domain.core.home.Results
 
-data class WrappedListResponse(
-    @SerializedName("cod") var cod : String,
-    @SerializedName("message") var message : String,
-    @SerializedName("list") var list : List<WeatherResponse>? = null,
-    @SerializedName("city") var city : CityResponse? = null,
+data class WrappedNewsResponse(
+    @SerializedName("status") var status : String,
+    @SerializedName("num_results") var num_results : Int,
+    @SerializedName("fault") var fault : fault? = null,
+    @SerializedName("results") var results : List<Results>? = null,
 )

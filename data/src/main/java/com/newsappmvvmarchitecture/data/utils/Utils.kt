@@ -4,12 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import com.newsappmvvmarchitecture.domain.core.BaseResult
+import com.newsappmvvmarchitecture.domain.core.core.BaseResult
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.util.*
 
 
 object Utils {

@@ -1,7 +1,7 @@
-package com.shisheo.clean_3.data
+package com.newsappmvvmarchitecture.www.di
 
 import com.newsappmvvmarchitecture.data.APIs
-import com.shisheo.clean_3.data.NetworkModule.component.BASE_URL
+import com.newsappmvvmarchitecture.www.di.NetworkModule.component.BASE_URL
 
 import dagger.Module
 import dagger.Provides
