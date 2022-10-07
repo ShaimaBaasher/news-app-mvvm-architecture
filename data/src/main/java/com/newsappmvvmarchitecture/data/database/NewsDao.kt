@@ -15,4 +15,7 @@ interface NewsDao {
 
     @Query("SELECT * FROM news_table")
     fun loadAll(): Flow<NewsEntity>
+
+    @Query("DELETE FROM news_table")
+    fun deleteAll()
 }

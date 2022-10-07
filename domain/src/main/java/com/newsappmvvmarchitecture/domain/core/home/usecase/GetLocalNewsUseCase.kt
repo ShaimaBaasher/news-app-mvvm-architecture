@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetLocalNewsUseCase @Inject constructor(private val newsRepository: NewsRepository) {
-    operator fun invoke(): Flow<BaseResult<NewsEntity>> {
+     operator fun invoke(): Flow<BaseResult<NewsEntity>> {
         return newsRepository.observeLocalNews()
     }
 }

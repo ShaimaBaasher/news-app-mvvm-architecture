@@ -25,15 +25,17 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun storeNews(newsEntity: NewsEntity) {
         val placeEntity = fromNews(newsEntity)
-        Log.d("placeEntity", Gson().toJson(placeEntity))
         newsDao.insert(placeEntity)
+    }
+
+    override suspend fun deleteAll() {
+        newsDao.deleteAll()
     }
 
     override suspend fun getNews(section: String): Flow<BaseResult<NewsEntity>> {
         return flow {
             try {
                 val response = api.getMostViewedNews(section, API_KEY)
-                Log.d("responseFromServer", Gson().toJson(response.body()))
 
                 val body = response.body()
                 if (body?.status.equals("OK")) {
@@ -47,7 +49,6 @@ class WeatherRepositoryImpl @Inject constructor(
                         emit(BaseResult.ErrorMsg(body.fault!!.faultstring!!))
                 }
             } catch (e: Exception) {
-                Log.d("responseFromServerFS", Gson().toJson(e.message))
                 emit(BaseResult.ErrorMsg(Utils.resolveError(e)))
             }
         }
