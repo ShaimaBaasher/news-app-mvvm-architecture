@@ -1,7 +1,7 @@
 package com.newsappmvvmarchitecture.www.di
 
 import com.newsappmvvmarchitecture.data.APIs
-import com.newsappmvvmarchitecture.www.BuildConfig
+import com.newsappmvvmarchitecture.data.BuildConfig
 import com.newsappmvvmarchitecture.www.di.NetworkModule.component.BASE_URL
 
 import dagger.Module

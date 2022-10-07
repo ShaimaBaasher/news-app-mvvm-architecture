@@ -4,7 +4,7 @@ import android.content.Context
 import com.newsappmvvmarchitecture.data.APIs
 import com.newsappmvvmarchitecture.data.database.NewsDao
 import com.newsappmvvmarchitecture.domain.core.NewsRepository
-import com.shaima.data.repository.WeatherRepositoryImpl
+import com.newsappmvvmarchitecture.data.repository.WeatherRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

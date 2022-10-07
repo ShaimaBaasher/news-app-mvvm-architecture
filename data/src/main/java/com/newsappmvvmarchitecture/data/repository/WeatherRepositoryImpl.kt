@@ -1,7 +1,8 @@
-package com.shaima.data.repository
+package com.newsappmvvmarchitecture.data.repository
 
 import android.content.Context
 import com.newsappmvvmarchitecture.data.APIs
+import com.newsappmvvmarchitecture.data.BuildConfig
 import com.newsappmvvmarchitecture.data.database.NewsDao
 import com.newsappmvvmarchitecture.data.utils.Utils
 import com.newsappmvvmarchitecture.domain.core.*
@@ -12,8 +13,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 
-//const val API_KEY = BuildConfig.API_KEY
-const val API_KEY = "5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"
+const val API_KEY = BuildConfig.API_KEY
+//const val API_KEY = "5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"
 
 class WeatherRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
