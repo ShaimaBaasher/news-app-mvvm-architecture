@@ -1,15 +1,15 @@
-package com.newsappmvvmarchitecture.www.ui.notifications
+package com.newsappmvvmarchitecture.www.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.newsappmvvmarchitecture.www.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
+class DetailsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -17,21 +17,32 @@ class NotificationsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    // get the arguments from the Registration fragment
+    private val args : DetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val detailsViewModel =
+            ViewModelProvider(this)[DetailsViewModel::class.java]
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        // Receive the arguments in a variable
+        val userDetails = args.myArg
+
+        // set the values to respective textViews
+        binding.textNotifications.text = userDetails.title
+//        binding.tvEmail.text = userDetails.email
+//        binding.tvPassword.text = userDetails.password
+
+//        val textView: TextView = binding.textNotifications
+//        notificationsViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
         return root
     }
 

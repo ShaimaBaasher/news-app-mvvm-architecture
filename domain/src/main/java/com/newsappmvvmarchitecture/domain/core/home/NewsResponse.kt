@@ -12,7 +12,6 @@ data class Results(
     @SerializedName("source") var source : String?,
     @SerializedName("title") var title : String?,
     @SerializedName("abstract") var abstract : String?,
-//    @SerializedName("media") var weather : List<media>?,
     ) : Parcelable
 
 @Parcelize

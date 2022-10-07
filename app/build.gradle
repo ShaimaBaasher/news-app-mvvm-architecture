@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs'
+    id("androidx.navigation.safeargs")
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -34,7 +34,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'API_BASE_URL', '"https://api.nytimes.com/svc/mostpopular/v2/"'
         }
-        dev {
+        debug {
             versionNameSuffix ".dev"
             debuggable true
             minifyEnabled false

@@ -12,6 +12,7 @@ import com.newsappmvvmarchitecture.domain.core.home.usecase.GetNewsUseCase
 import com.newsappmvvmarchitecture.domain.core.home.usecase.StoreNewsData
 import com.newsappmvvmarchitecture.www.ui.home.adapters.NewsAdapter
 import com.newsappmvvmarchitecture.www.ui.home.adapters.OnPostClickListener
+import com.newsappmvvmarchitecture.www.utils.ClickEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -30,6 +31,10 @@ class HomeViewModel  @Inject constructor(
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
+
+    private val _navigateToDetials = MutableLiveData<ClickEvent<Results>>()
+    val navigateToDetials : LiveData<ClickEvent<Results>>
+        get() = _navigateToDetials
 
     private val state = MutableStateFlow<HomeFragmentState>(HomeFragmentState.Init)
     val mStateNews: StateFlow<HomeFragmentState> get() = state
@@ -92,6 +97,6 @@ class HomeViewModel  @Inject constructor(
     }
 
     override fun onPostClickListener(dataModel: Results) {
-        Log.d("onPostClickListener", Gson().toJson(dataModel))
+        _navigateToDetials.value = ClickEvent(dataModel)  // Trigger the event by setting a new Event as a new value
     }
 }

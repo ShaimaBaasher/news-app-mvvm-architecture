@@ -30,25 +30,6 @@ class Converters {
         return gson.fromJson<List<Results>>(news, type)
     }
 
-//    @TypeConverter
-//    fun fromCity(cityResponse: CityResponse): String? {
-//        if (cityResponse == null) {
-//            return null
-//        }
-//        val gson = Gson()
-//        val type: Type = object : TypeToken<CityResponse?>() {}.type
-//        return gson.toJson(cityResponse, type)
-//    }
-//
-//    @TypeConverter
-//    fun toCityList(weather: String?): CityResponse? {
-//        if (weather == null) {
-//            return null
-//        }
-//        val gson = Gson()
-//        val type =
-//            object : TypeToken<CityResponse?>() {}.type
-//        return gson.fromJson<CityResponse>(weather, type)
-//    }
+
 
 }

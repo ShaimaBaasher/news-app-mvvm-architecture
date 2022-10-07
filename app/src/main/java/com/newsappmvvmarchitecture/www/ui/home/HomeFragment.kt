@@ -1,18 +1,20 @@
 package com.newsappmvvmarchitecture.www.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.newsappmvvmarchitecture.domain.core.NewsEntity
-import com.newsappmvvmarchitecture.domain.core.home.Results
 import com.newsappmvvmarchitecture.domain.core.home.state.HomeFragmentState
 import com.newsappmvvmarchitecture.www.R
 import com.newsappmvvmarchitecture.www.databinding.FragmentHomeBinding
@@ -23,6 +25,7 @@ import com.newsappmvvmarchitecture.www.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import androidx.navigation.fragment.findNavController
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -49,6 +52,19 @@ class HomeFragment : Fragment() {
         homeViewModel.getMostViewedNews("7")
         observeNewsState(homeViewModel)
         val root: View = binding.root
+
+        homeViewModel.navigateToDetials.observe(requireActivity(), Observer {
+            it.getContentIfNotHandled()?.let {
+                // create an action and pass the required user object to it
+                // If you can not find the RegistrationDirection try to "Build project"
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(it)
+
+                // this will navigate the current fragment i.e
+                // Registration to the Detail fragment
+                findNavController().navigate(action)
+            }
+        })
+
         return root
     }
 
@@ -65,7 +81,7 @@ class HomeFragment : Fragment() {
         when (state) {
             is HomeFragmentState.SuccessGetNews -> state.newsEntity?.let {
                 handelNewsPosts(it)
-                homeViewModel.storeNew(it)
+//                homeViewModel.storeNew(it)
             }
             is HomeFragmentState.IsLoading -> state.isLoading?.let { handleLoading(it) }
             is HomeFragmentState.ShowToast -> {

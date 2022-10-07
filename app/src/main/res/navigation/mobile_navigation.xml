@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.newsappmvvmarchitecture.www.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_details"
+            app:destination="@id/navigation_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_info"
@@ -17,9 +21,13 @@
         android:label="@string/about"
         tools:layout="@layout/fragment_dashboard" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_notifications"-->
-<!--        android:name="com.newsappmvvmarchitecture.www.ui.notifications.NotificationsFragment"-->
-<!--        android:label="@string/title_notifications"-->
-<!--        tools:layout="@layout/fragment_notifications" />-->
+    <fragment
+        android:id="@+id/navigation_details"
+        android:name="com.newsappmvvmarchitecture.www.ui.details.DetailsFragment"
+        android:label="@string/title_details"
+        tools:layout="@layout/fragment_notifications" >
+        <argument
+            android:name="myArg"
+            app:argType="com.newsappmvvmarchitecture.domain.core.home.Results" />
+    </fragment>
 </navigation>
