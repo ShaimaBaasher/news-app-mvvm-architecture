@@ -4,7 +4,7 @@ A sample android app that shows how to use ViewModels and Room together with Cor
 ## Implemented by Clean Architecture
 The following project is structured with 3 layers:
 
-- Presentation
+- Presentation (app)
 - Domain
 - Data
 
