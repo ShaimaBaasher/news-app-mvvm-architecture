@@ -1,8 +1,6 @@
 package com.shaima.data.repository
 
 import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
 import com.newsappmvvmarchitecture.data.APIs
 import com.newsappmvvmarchitecture.data.database.NewsDao
 import com.newsappmvvmarchitecture.data.utils.Utils

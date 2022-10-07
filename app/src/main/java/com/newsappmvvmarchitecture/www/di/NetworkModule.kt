@@ -1,6 +1,7 @@
 package com.newsappmvvmarchitecture.www.di
 
 import com.newsappmvvmarchitecture.data.APIs
+import com.newsappmvvmarchitecture.www.BuildConfig
 import com.newsappmvvmarchitecture.www.di.NetworkModule.component.BASE_URL
 
 import dagger.Module
@@ -21,8 +22,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     object component {
-//        const val BASE_URL = BuildConfig.API_BASE_URL
-        const val BASE_URL = "https://api.nytimes.com/svc/mostpopular/v2/"
+        const val BASE_URL = BuildConfig.API_BASE_URL
     }
 
     @Singleton

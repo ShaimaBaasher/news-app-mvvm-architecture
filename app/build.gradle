@@ -22,6 +22,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.nytimes.com/svc/mostpopular/v2/"'
+
 //        signingConfig signingConfigs.dev
 
     }
@@ -45,6 +47,7 @@ android {
             debuggable true
             minifyEnabled true
             shrinkResources true
+            buildConfigField 'String', 'API_BASE_URL', '"https://api.nytimes.com/svc/mostpopular/v2/"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

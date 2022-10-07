@@ -13,13 +13,34 @@ android {
         targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
+
         consumerProguardFiles "consumer-rules.pro"
+
     }
 
     buildTypes {
         release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
+        }
+        debug {
+            versionNameSuffix ".dev"
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
+        }
+        minifiedDebug {
+            versionNameSuffix ".dev"
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField 'String', 'API_KEY', '"5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
