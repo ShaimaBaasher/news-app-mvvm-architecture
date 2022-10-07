@@ -10,14 +10,18 @@ import com.google.gson.Gson
 import com.newsappmvvmarchitecture.data.database.AppDatabase
 import com.newsappmvvmarchitecture.data.database.NewsDao
 import com.newsappmvvmarchitecture.domain.core.NewsEntityDAO
+import com.newsappmvvmarchitecture.domain.core.core.BaseResult
 import com.newsappmvvmarchitecture.domain.core.home.Results
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CountDownLatch
 
 @RunWith(AndroidJUnit4::class)
 class AppDatabaseTest {
@@ -50,9 +54,16 @@ class AppDatabaseTest {
 
         dao.insert(newsEntityDAO)
 
-        val newsList = dao.loadAll()
+        val latch = CountDownLatch(1)
+        val job = launch(Dispatchers.IO) {
+            dao.loadAll().collect { cores ->
+                assertNotNull(cores)
+                latch.countDown()
+            }
+        }
 
-        assertNotNull(newsList)
+        latch.await()
+        job.cancel()
     }
 
     @After
