@@ -38,7 +38,6 @@ ext {
     roomCompiler = "androidx.room:room-compiler:$roomVersion"
     roomKtx = "androidx.room:room-ktx:$roomVersion"
 
-
     picasso = "com.squareup.picasso:picasso:$picassoVersion"
     key = "123456"
     alias = "key0"

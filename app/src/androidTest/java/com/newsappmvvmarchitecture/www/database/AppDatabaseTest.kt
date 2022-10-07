@@ -38,16 +38,17 @@ class AppDatabaseTest {
 
     @Test
     fun writeAndReadLocalNews() = runBlocking {
+        val results =  Results(
+            123456,
+            "nyt://article/229225e8-e303-5a75-979a-c40da4de0756",
+            "https://www.nytimes.com/2022/09/30/us/fort-myers-beach-hurricane-ian.html",
+            "New York Times",
+            "On Florida’s Islands, Scenes of Paradise Lost, Maybe for Good",
+            "On Fort Myers Beach", "2-22-2022", null
+        )
         val weatherResponseList = mutableListOf<Results>()
         weatherResponseList.add(
-            Results(
-                123456,
-                "nyt://article/229225e8-e303-5a75-979a-c40da4de0756",
-                "https://www.nytimes.com/2022/09/30/us/fort-myers-beach-hurricane-ian.html",
-                "New York Times",
-                "On Florida’s Islands, Scenes of Paradise Lost, Maybe for Good",
-                "On Fort Myers Beach", "2-22-2022", null
-            )
+            results
         )
 
         val newsEntityDAO = NewsEntityDAO(0, "OK", 10, weatherResponseList)
@@ -58,6 +59,37 @@ class AppDatabaseTest {
         val job = launch(Dispatchers.IO) {
             dao.loadAll().collect { cores ->
                 assertNotNull(cores)
+                latch.countDown()
+            }
+        }
+
+        latch.await()
+        job.cancel()
+    }
+
+    @Test
+    fun checkIfDataBaseContainsResultModel() = runBlocking {
+        val results =  Results(
+            123456,
+            "nyt://article/229225e8-e303-5a75-979a-c40da4de0756",
+            "https://www.nytimes.com/2022/09/30/us/fort-myers-beach-hurricane-ian.html",
+            "New York Times",
+            "On Florida’s Islands, Scenes of Paradise Lost, Maybe for Good",
+            "On Fort Myers Beach", "2-22-2022", null
+        )
+        val weatherResponseList = mutableListOf<Results>()
+        weatherResponseList.add(
+            results
+        )
+
+        val newsEntityDAO = NewsEntityDAO(0, "OK", 10, weatherResponseList)
+
+        dao.insert(newsEntityDAO)
+
+        val latch = CountDownLatch(1)
+        val job = launch(Dispatchers.IO) {
+            dao.loadAll().collect { cores ->
+                assertEquals(cores.results[0].title, results.title)
                 latch.countDown()
             }
         }
