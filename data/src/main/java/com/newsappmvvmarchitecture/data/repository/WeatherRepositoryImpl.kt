@@ -14,7 +14,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 
 const val API_KEY = BuildConfig.API_KEY
-//const val API_KEY = "5RPYyYmke5sOMMEdJVHvL6SV7ufjGh9V"
 
 class WeatherRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,

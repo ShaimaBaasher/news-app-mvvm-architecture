@@ -111,14 +111,10 @@ class HomeViewModel @Inject constructor(
     @OptIn(InternalCoroutinesApi::class)
     val viewState = getLocalNewsUseCase()
         .map { result ->
-            Log.d("getLocalNewsUseCase", Gson().toJson(result))
             when (result) {
                 is BaseResult.Success -> HomeFragmentState.SuccessGetFromDb(result.data)
                 is BaseResult.ErrorMsg -> result.msg.let { HomeFragmentState.ShowToast(it) }
                 is BaseResult.Error -> Log.d("exceptionMessage", result.exception.localizedMessage)
-                else -> {
-                    Log.d("exceptionMessage", "exceptionMessage")
-                }
             }
         }.asLiveData(viewModelScope.coroutineContext)
 
