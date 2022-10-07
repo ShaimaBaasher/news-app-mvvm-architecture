@@ -32,6 +32,8 @@ class HomeViewModel  @Inject constructor(
     }
     val text: LiveData<String> = _text
 
+    var resultsModel : MutableLiveData<Results> = MutableLiveData()
+
     private val _navigateToDetials = MutableLiveData<ClickEvent<Results>>()
     val navigateToDetials : LiveData<ClickEvent<Results>>
         get() = _navigateToDetials
@@ -97,6 +99,7 @@ class HomeViewModel  @Inject constructor(
     }
 
     override fun onPostClickListener(dataModel: Results) {
+//        resultsModel.postValue(dataModel)
         _navigateToDetials.value = ClickEvent(dataModel)  // Trigger the event by setting a new Event as a new value
     }
 }

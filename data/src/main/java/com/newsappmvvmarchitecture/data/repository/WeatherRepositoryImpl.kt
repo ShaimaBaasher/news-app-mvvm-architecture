@@ -39,7 +39,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 if (body?.status.equals("OK")) {
                     val newsList = mutableListOf<Results>()
                     body?.results?.forEach {
-                        newsList.add(Results(it.id, it.uri, it.url, it.source, it.title, it.abstract))
+                        newsList.add(Results(it.id, it.uri, it.url, it.source, it.title, it.abstract, it.published_date, it.media))
                     }
                     emit(BaseResult.Success(NewsEntity(status = body?.status, num_results = body?.num_results, results = newsList)))
                 } else {

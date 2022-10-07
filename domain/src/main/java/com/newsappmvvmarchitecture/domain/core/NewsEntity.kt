@@ -29,12 +29,7 @@ data class fault(
     var faultstring: String?,
 ) : Parcelable
 
-//@Parcelize
-//data class faultstring(
-//    var status: String?,
-//    var num_results: Int?,
-//    var results: List<Results>,
-//) : Parcelable
+
 
 fun fromNews(news: NewsEntity) = NewsEntityDAO(0, news.status!!, news.num_results!!, news.results)
 fun NewsEntityDAO.toNews() = NewsEntity(this.status, this.num_results, this.results)

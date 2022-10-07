@@ -3,14 +3,16 @@ package com.newsappmvvmarchitecture.www.ui.home.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.newsappmvvmarchitecture.domain.core.home.Results
 import com.newsappmvvmarchitecture.www.R
 import com.newsappmvvmarchitecture.www.databinding.RowNewsBinding
+import com.squareup.picasso.Picasso
 
-class NewsAdapter(private val newsList: MutableList<Results>, val onPostClickListener: OnPostClickListener) :
-    RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class NewsAdapter(
+    private val newsList: MutableList<Results>,
+    val onPostClickListener: OnPostClickListener
+) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     fun updateList(mProducts: List<Results>) {
         newsList.clear()
@@ -18,15 +20,16 @@ class NewsAdapter(private val newsList: MutableList<Results>, val onPostClickLis
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding: RowNewsBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RowNewsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Results, clickListener: OnPostClickListener) {
             binding.apply {
                 model = post
                 listener = clickListener
             }
-//            val img = "http://openweathermap.org/img/w/${product.weather!![0].icon}.png"
-//            Picasso.get().load(img).error(R.mipmap.ic_launcher)
-//                .into(itemBinding.imgIcon);
+            Picasso.get().load(post.media?.get(0)?.metadata?.get(0)?.url)
+                .error(R.mipmap.ic_launcher).resize(100, 100).centerCrop()
+                .into(binding.postImg)
         }
     }
 
@@ -39,7 +42,8 @@ class NewsAdapter(private val newsList: MutableList<Results>, val onPostClickLis
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(newsList[position], onPostClickListener)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(newsList[position], onPostClickListener)
 
     override fun getItemCount() = newsList.size
 }

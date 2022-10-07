@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.newsappmvvmarchitecture.www.databinding.FragmentNotificationsBinding
+
 
 class DetailsFragment : Fragment() {
 
@@ -36,6 +38,7 @@ class DetailsFragment : Fragment() {
 
         // set the values to respective textViews
         binding.textNotifications.text = userDetails.title
+
 //        binding.tvEmail.text = userDetails.email
 //        binding.tvPassword.text = userDetails.password
 
@@ -50,4 +53,6 @@ class DetailsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

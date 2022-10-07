@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_info"
-        android:name="com.newsappmvvmarchitecture.www.ui.dashboard.DashboardFragment"
+        android:name="com.newsappmvvmarchitecture.www.ui.about.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_dashboard" />
 

@@ -53,8 +53,8 @@ class HomeFragment : Fragment() {
         observeNewsState(homeViewModel)
         val root: View = binding.root
 
-        homeViewModel.navigateToDetials.observe(requireActivity(), Observer {
-            it.getContentIfNotHandled()?.let {
+        homeViewModel.resultsModel.observe(viewLifecycleOwner, Observer {
+            if(it != null) {
                 // create an action and pass the required user object to it
                 // If you can not find the RegistrationDirection try to "Build project"
                 val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(it)
@@ -62,6 +62,18 @@ class HomeFragment : Fragment() {
                 // this will navigate the current fragment i.e
                 // Registration to the Detail fragment
                 findNavController().navigate(action)
+                homeViewModel.resultsModel.postValue(null)
+            }
+        })
+        homeViewModel.navigateToDetials.observe(requireActivity(), Observer {
+            it.getContentIfNotHandled()?.let {
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(it)
+
+                // this will navigate the current fragment i.e
+                // Registration to the Detail fragment
+                findNavController().navigate(action)
+                homeViewModel.resultsModel.postValue(null)
+
             }
         })
 

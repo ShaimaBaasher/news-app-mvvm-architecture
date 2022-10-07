@@ -10,7 +10,7 @@ ext {
     def lifecycle_version = "2.4.0"
     def activity_ktx_version = "1.2.3"
 
-    def picassoVersion = "2.71828"
+    def picassoVersion = "2.8"
     def coroutineVersion = "1.4.1"
 
     coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"

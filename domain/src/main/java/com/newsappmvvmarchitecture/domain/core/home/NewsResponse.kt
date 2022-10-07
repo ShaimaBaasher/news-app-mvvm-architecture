@@ -12,9 +12,16 @@ data class Results(
     @SerializedName("source") var source : String?,
     @SerializedName("title") var title : String?,
     @SerializedName("abstract") var abstract : String?,
+    @SerializedName("published_date") var published_date : String?,
+    @SerializedName("media") var media : List<media>?,
     ) : Parcelable
 
 @Parcelize
 data class media(
-    @SerializedName("temp") var temp : String? = null,
-    @SerializedName("caption") var humidity : String? = null, ) : Parcelable
+    @SerializedName("media-metadata") var metadata : List<metadata>? = null,
+) : Parcelable
+
+@Parcelize
+data class metadata(
+    @SerializedName("url") var url : String? = null,
+) : Parcelable
