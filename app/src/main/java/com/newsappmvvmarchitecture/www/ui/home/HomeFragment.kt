@@ -1,5 +1,6 @@
 package com.newsappmvvmarchitecture.www.ui.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +13,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.newsappmvvmarchitecture.domain.core.NewsEntity
 import com.newsappmvvmarchitecture.domain.core.home.state.HomeFragmentState
 import com.newsappmvvmarchitecture.www.R
+import com.newsappmvvmarchitecture.www.SharedViewModel
 import com.newsappmvvmarchitecture.www.databinding.FragmentHomeBinding
+import com.newsappmvvmarchitecture.www.di.SharedPrefModule
 import com.newsappmvvmarchitecture.www.ui.home.adapters.NewsAdapter
 import com.newsappmvvmarchitecture.www.utils.ext.gone
 import com.newsappmvvmarchitecture.www.utils.ext.showToast
@@ -25,13 +28,17 @@ import com.newsappmvvmarchitecture.www.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import androidx.navigation.fragment.findNavController
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    private var dayOfWeek: Int = 0
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
+
+    private lateinit var sharedViewModel: SharedViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -45,35 +52,30 @@ class HomeFragment : Fragment() {
     ): View {
         homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]
+
+        sharedViewModel =
+            ViewModelProvider(requireActivity()).get<SharedViewModel>(SharedViewModel::class.java)
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         binding.viewModel = homeViewModel
         setupRecyclerView()
-        homeViewModel.getMostViewedNews("7")
-        observeNewsState(homeViewModel)
+
+        if(homeViewModel.getSavedDayOfWeek() != homeViewModel.getCurrentDayOfWeek())
+            homeViewModel.deleteLocalNewsUseCase()
+
+        getFromDb()
+
         val root: View = binding.root
 
-        homeViewModel.resultsModel.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                // create an action and pass the required user object to it
-                // If you can not find the RegistrationDirection try to "Build project"
-                val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(it)
-
-                // this will navigate the current fragment i.e
-                // Registration to the Detail fragment
-                findNavController().navigate(action)
-                homeViewModel.resultsModel.postValue(null)
-            }
-        })
         homeViewModel.navigateToDetials.observe(requireActivity(), Observer {
             it.getContentIfNotHandled()?.let {
+                sharedViewModel.resultsModel.value = it
                 val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(it)
 
                 // this will navigate the current fragment i.e
-                // Registration to the Detail fragment
+                // to the Detail fragment
                 findNavController().navigate(action)
-                homeViewModel.resultsModel.postValue(null)
-
             }
         })
 
@@ -93,12 +95,12 @@ class HomeFragment : Fragment() {
         when (state) {
             is HomeFragmentState.SuccessGetNews -> state.newsEntity?.let {
                 handelNewsPosts(it)
-//                homeViewModel.storeNew(it)
+                homeViewModel.storeNew(it)
             }
             is HomeFragmentState.IsLoading -> state.isLoading?.let { handleLoading(it) }
             is HomeFragmentState.ShowToast -> {
                 state.message?.let { requireActivity().showToast(it) }
-                getFromDb()
+//                getFromDb()
             }
             is HomeFragmentState.Init -> Unit
         }
@@ -107,17 +109,25 @@ class HomeFragment : Fragment() {
     private fun getFromDb() {
         homeViewModel.viewState.observe(viewLifecycleOwner) {
             when (it) {
-                is HomeFragmentState.SuccessGetFromDb -> it.newsEntity?.let { it1 ->
-                    if(it.newsEntity!!.results.isNotEmpty()) {
-                        handelNewsPosts(it1)
+                is HomeFragmentState.SuccessGetFromDb -> {
+                    if (it.newsEntity == null) {
+                        homeViewModel.getMostViewedNews("7")
+                        observeNewsState(homeViewModel)
+                    } else {
+                        it.newsEntity?.let { it1 ->
+                            handelNewsPosts(it1)
+                        }
                     }
                 }
-                is HomeFragmentState.IsLoading -> it.isLoading?.let { it1 -> handleLoading(it1) }
+                is HomeFragmentState.IsLoading -> it.isLoading?.let { it1 ->
+                    handleLoading(it1)
+                }
                 is HomeFragmentState.ShowToast -> it.message?.let { it1 ->
                     requireActivity().showToast(it1)
                 }
                 is HomeFragmentState.Init -> Unit
             }
+
         }
     }
 

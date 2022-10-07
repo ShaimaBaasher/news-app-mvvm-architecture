@@ -27,6 +27,7 @@ class NewsAdapter(
                 model = post
                 listener = clickListener
             }
+            if(post.media?.size!! > 0)
             Picasso.get().load(post.media?.get(0)?.metadata?.get(0)?.url)
                 .error(R.mipmap.ic_launcher).resize(100, 100).centerCrop()
                 .into(binding.postImg)

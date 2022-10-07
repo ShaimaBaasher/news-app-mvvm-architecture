@@ -46,7 +46,7 @@ class AppDatabaseTest {
                 "https://www.nytimes.com/2022/09/30/us/fort-myers-beach-hurricane-ian.html",
                 "New York Times",
                 "On Florida’s Islands, Scenes of Paradise Lost, Maybe for Good",
-                "On Fort Myers Beach"
+                "On Fort Myers Beach", "2-22-2022", null
             )
         )
 
