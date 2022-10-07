@@ -23,5 +23,5 @@ Used http://api.nytimes.com as a public api
 ## At a glance
 
     get a list of News posts from api .
-    user can click on one of the posts to disply more info.
+    user can click on one of the posts to display more info.
     Supported offline mode
